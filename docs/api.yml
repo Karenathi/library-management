@@ -86,17 +86,49 @@ paths:
         '204':
           description: Auteur supprimé avec succès
 
+  /books/{bookId}/authors/{authorID}:
+   put:
+    parameters:
+      - name: bookId
+        in: path
+        schema: 
+          type: string
+        required: true
+
+      - name: authorID
+        in: path
+        schema:
+          type: string
+        required: true
+    responses:
+      '200':
+          description: The updated book
+          content:
+            application/json:
+              schema: 
+                $ref: "#/components/schemas/Book"
+
+  /books/authors:
+   put:
+    tags:
+      - "Book"
+    requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items: 
 
 components:
   schemas:
     Book:
-      type: object
-      properties:
-        id:
-          type: string
-        bookName:
-          type: string
-      
+      allOf:
+       - $ref : "#/components/schemas/CrupdateBook"
+       - type: object
+         properties:
+           author:
+            $ref: "#/components/schemas/Author"
+
     Author:
            type: object
            properties:
