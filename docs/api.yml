@@ -203,6 +203,19 @@ paths:
         '204':
           description: Topic deleted successfully
 
+  /books/{bookID}/topics/{topicsID}:
+    put:
+      parameters:
+        - in: path
+          name: bookID
+          schema: 
+            type: string
+          required: true 
+      responses:
+        '200':
+          description: The updated topic
+
+
 
 components:
   schemas:
