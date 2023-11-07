@@ -165,6 +165,44 @@ paths:
       responses:
         '200': 
           description: Authors updated successfully
+  
+  /topics:
+    get:
+      summary: Get all topics 
+      description: Get all the topics in the database
+      responses:
+        '200':
+          description: The topics list
+
+    put:
+      summary: Update topic
+      description: Update topic according by ID 
+      requestBody:
+        required: true
+        content:
+          application/json:
+           schema:
+            type: array
+            items: 
+              $ref: "#/components/schemas/Book"
+      responses:
+        '200':
+          description: Topic updated successfully
+
+    delete:
+      summary: Delete Topic
+      description: Delete Topic by id
+      parameters:
+      - in: query
+        name: id
+        required: true
+        schema: 
+          type: integer
+
+      responses:
+        '204':
+          description: Topic deleted successfully
+
 
 components:
   schemas:
