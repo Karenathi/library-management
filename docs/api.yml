@@ -214,6 +214,22 @@ paths:
       responses:
         '200':
           description: The updated topic
+  
+  /books/topics:
+    put:
+      summary: Update Book topics
+      description: Update the topic of a Book
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: 
+              type: array
+              items: 
+                $ref: "#/components/schemas/UpdateTopicBook"
+      responses:
+        '200':
+          description: Topic updated successfully
 
 
 
@@ -264,4 +280,12 @@ components:
           type: integer
         authorID:
           type: integer
+    
+    UpdateTopicBook:
+      type: object
+      properties:
+        topicsID:
+          type: integer
+        topicName:
+          type: string
   
