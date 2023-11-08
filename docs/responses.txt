@@ -24,3 +24,10 @@ ii. La structure UpdateBookAuthor devrait inclure les propriétés de CrupdateBo
     des situations où l'utilisation des entêtes de requête est justifiée, notamment si des normes spécifiques l'exigent,
      si vous cherchez à réduire la taille de l'URL, ou si vous avez besoin de flexibilité supplémentaire. 
      Néanmoins, l'utilisation des paramètres de requête est plus standard et intuitive dans la conception d'API REST.
+
+
+TD dans la vidéo : 
+        Il faut créer une nouvelle endpoint /bookAuthors et on y définit l'opération PUT pour associer plusieurs authors à plusieurs books7
+        Le corps de la requête devrait contenir une liste d'associations, où chaque élément de la liste spécifie l'ID du
+         livre et l'ID de l'auteur.
+
