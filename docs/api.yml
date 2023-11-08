@@ -14,36 +14,7 @@ paths:
       description: The returned books are ordered by updated datetime.
       operationId: getBooks
       parameters:
-        - in: query
-          name: bookName
-          description: Filter return books by given name
-          required: false
-          schema:
-            type: string
-
-        - in: query
-          name: releaseDate
-          description: Filter books by release date intervals
-          required: false
-          schema:
-            type: string
-            format: date
-
-        - in: query
-          name: page
-          description: Page number for pagination (default:1)
-          required: false
-          schema:
-            type: integer
-            default: 1
-
-        - in: query
-          name: pageSize
-          description: Page number for pagination (default:1)
-          required: false
-          schema:
-            type: integer
-            default: 50
+          - $ref: '#/components/parameters/queryPagination'
 
       responses:
         200:
@@ -97,9 +68,12 @@ paths:
           schema: 
             type: integer
             default: 50
+
+        - $ref: '#/components/parameters/queryPagination'
       responses:
         '200':
            description: The author's list
+
     put:
       tags:
         - "Author"
@@ -118,7 +92,7 @@ paths:
         content:
           application/json:
            schema:
-              $ref: "#/components/schemas/Author"
+             $ref: "#/components/schemas/Author"
       responses:
         '200':
           description: Author updated successfully
@@ -229,7 +203,7 @@ components:
           type: integer
 
   parameters:
-    queryPagination:
+    QueryPagination:
       name: page
       in: query
       description: Page number for pagination
@@ -238,7 +212,7 @@ components:
         type: integer
         default: 1
     
-    pathPagination:
+    PathPagination:
       name: page
       in: path
       description: Page number for pagination
