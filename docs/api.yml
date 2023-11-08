@@ -14,7 +14,7 @@ paths:
       description: The returned books are ordered by updated datetime.
       operationId: getBooks
       parameters:
-          - $ref: '#/components/parameters/queryPagination'
+          - $ref: '#/components/parameters/QueryPagination'
 
       responses:
         200:
@@ -69,7 +69,8 @@ paths:
             type: integer
             default: 50
 
-        - $ref: '#/components/parameters/queryPagination'
+        - $ref: '#/components/parameters/QueryPagination'
+
       responses:
         '200':
            description: The author's list
