@@ -11,3 +11,9 @@ ii. La structure UpdateBookAuthor devrait inclure les propriétés de CrupdateBo
     opérations groupées, des personnalisations d'opérations ou la réduction du nombre de requêtes API nécessitent 
     la mise à jour ou l'association de plusieurs propriétés des objets en une seule opération.
 
+
+4-a
+    Bien que possible, gérer la pagination à travers les en-têtes de la requête n'est pas la pratique
+     courante dans les API REST. Les paramètres de requête sont préférés pour des raisons de standardisation, 
+     de simplicité, de visibilité et de compatibilité avec les conventions REST, tandis que l'utilisation des en-têtes 
+     pour la pagination peut être moins intuitive et plus complexe pour les développeurs.
