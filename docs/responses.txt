@@ -6,3 +6,8 @@ de ces objets, des requêtes distinctes peuvent être utilisées. Cette approche
  opérations de mise à jour et d'association.
 
 
+
+ii. La structure UpdateBookAuthor devrait inclure les propriétés de CrupdateBook et Author lorsque des
+    opérations groupées, des personnalisations d'opérations ou la réduction du nombre de requêtes API nécessitent 
+    la mise à jour ou l'association de plusieurs propriétés des objets en une seule opération.
+
