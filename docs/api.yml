@@ -140,6 +140,8 @@ paths:
 
   /books/{bookID}/authors/{authorID}:
    put:
+      tags:
+        - "Book"
       parameters:
         - name: bookID
           in: path
@@ -162,6 +164,8 @@ paths:
   
   /books/authors:
     put:
+      tags:
+        - "Book"
       summary: Update Book authors
       description: Update the authors of multiple books
       requestBody: 
