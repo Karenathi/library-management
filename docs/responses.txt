@@ -1,0 +1,8 @@
+
+i. La structure UpdateBookAuthor contient uniquement les identifiants des objets CrupdateBook et Author 
+pour simplifier les opérations de mise à jour ou d'association. Cela réduit la quantité de données échangées, 
+améliore l'efficacité de l'API et simplifie le traitement du côté serveur. Pour obtenir les propriétés complètes 
+de ces objets, des requêtes distinctes peuvent être utilisées. Cette approche permet une gestion plus flexible des
+ opérations de mise à jour et d'association.
+
+
