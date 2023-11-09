@@ -42,6 +42,12 @@ paths:
               items:
                 $ref: '#/components/schemas/Book'
 
+              $ref: "#/components/schemas/BookImport"
+          application/vnd.openxmlformats-officedocument.spreadsheetml.sheet:
+          
+            schema:
+              $ref: "#/components/schemas/ExcelBookImport"
+
       responses:
          '200':
           $ref: "#/components/responses/Response200"
@@ -90,12 +96,19 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Author"
+
       requestBody:
         required: true
         content:
           application/json:
            schema:
-             $ref: "#/components/schemas/Author"
+              $ref: "#/components/schemas/Author"
+          application/vnd.openxmlformats-officedocument.spreadsheetml.sheet: # MIME type for Excel
+            schema:
+              $ref: "#/components/schemas/ExcelAuthorImport"
+
+            
+         
       responses:
          '200':
           $ref: "#/components/responses/Response200"
@@ -132,6 +145,7 @@ paths:
 
          '500':
           $ref: "#/components/responses/Response500"
+          
   /books/{bookID}/authors/{authorID}:
    put:
       tags:
@@ -157,6 +171,34 @@ paths:
                   $ref: "#/components/schemas/Book"
   
   /books/authors:
+    post:
+      tags:
+        - "Book"
+      summary: Import books
+      description: Import a list of books
+      operationId: importBooks
+      requestBody:
+        description: Import books in either Excel or JSON format
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BookImport"
+          application/vnd.openxmlformats-officedocument.spreadsheetml.sheet:
+            schema:
+              $ref: "#/components/schemas/ExcelBookImport"
+      responses:
+         '200':
+          $ref: "#/components/responses/Response200"
+
+         '400':
+          $ref: "#/components/responses/Response400"
+
+         '403':
+          $ref: "#/components/responses/Response403"
+
+         '500':
+          $ref: "#/components/responses/Response500"
     put:
       tags:
         - "Book"
@@ -169,7 +211,13 @@ paths:
               schema: 
                type: array
                items:
-                $ref: '#/components/schemas/UpdateBookAuthor'
+                $ref: '#/components/schemas/BookImport'
+
+               $ref: "#/components/schemas/ExcelBookImport"
+            application/vnd.openxmlformats-officedocument.spreadsheetml.sheet: # MIME type for Excel
+            schema:
+        $ref: "#/components/schemas/ExcelAuthorImport"
+
       responses:
          '200':
           $ref: "#/components/responses/Response200"
@@ -200,6 +248,40 @@ paths:
           $ref: "#/components/responses/Response403"
 
          '500':
+          $ref: "#/components/responses/Response500"
+
+
+  /authors/import:
+    post:
+      tags:
+        - "Author"
+      summary: Import authors
+      description: Import a list of authors
+      operationId: importAuthors
+      requestBody:
+        description: Import authors in either Excel or JSON format
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AuthorImport"
+          application/vnd.openxmlformats-officedocument.spreadsheetml.sheet:
+            schema:
+              $ref: "#/components/schemas/ExcelAuthorImport"
+      responses:
+        200:
+          description: List of imported authors
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Author"
+        400:
+          $ref: "#/components/responses/Response400"
+        403:
+          $ref: "#/components/responses/Response403"
+        500:
           $ref: "#/components/responses/Response500"
 components:
   schemas:
@@ -248,7 +330,7 @@ components:
           type: integer
         authorID:
           type: integer
-          
+
     AuthorImport:
       oneOf:
         - $ref: "#/components/schemas/ExcelAuthorImport"
