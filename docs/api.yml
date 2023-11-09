@@ -139,6 +139,17 @@ paths:
         '200': 
           description: Authors updated successfully
 
+  /books/{page}:
+    get:
+      tags:
+        - "Book"
+      parameters:
+        - $ref: "#/components/parameters/pathPagination"
+      
+      responses:
+        '200':
+          description: Done successfully
+
 components:
   schemas:
     Book:
@@ -219,5 +230,5 @@ components:
           pagesize: 
             type: integer
             default: 50
-        default: 50
+        
 
