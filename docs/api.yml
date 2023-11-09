@@ -198,6 +198,60 @@ components:
         authorID:
           type: integer
 
+    defaultResponse:
+      type: object
+      properties:
+        status:
+          type: object
+          properties:
+            code:
+              type: integer
+            message:
+              type: string
+        body:
+          type: object
+
+  responses:
+    Response200:
+      description: HTTP 200 (OK)
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/defaultResponse"
+          example:
+            status:
+              code: 200
+              message: OK
+    Response400:
+      description: HTTP 400 (Bad Request)
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/defaultResponse"
+          example:
+            status:
+              code: 400
+              message: Bad Request
+    Response403:
+      description: HTTP 403 (Forbidden)
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/defaultResponse"
+          example:
+            status:
+              code: 403
+              message: Forbidden
+    Response500:
+      description: HTTP 500 (Internal Server Error)
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/defaultResponse"
+          example:
+            status:
+              code: 500
+              message: Internal Server Error
   parameters:
     queryPagination:
       name: page
