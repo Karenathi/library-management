@@ -80,6 +80,8 @@ paths:
       parameters:
           - $ref: '#/components/parameters/queryPagination'
           - $ref: '#/components/parameters/pathPagination'
+          - $ref: '#/components/parameters/BorrowBooks'
+          - $ref: '#/components/parameters/RenderBooks'
 
       responses:
          '200':
@@ -332,7 +334,29 @@ components:
       schema:
         type: integer
         default: 50
+    BorrowBooks:
+      name: Borrowing
+      in: query
+      description: Book borrowed
+      required: false
+      schema:
+        type: string
+        default: 
+          enum:
+            - True
+            - False
 
+    RenderBooks:
+      name: Rendering
+      in: query
+      description: Book Rendered
+      required: false
+      schema:
+        type: string
+        default:
+          enum:
+            - True
+            - False 
   responses:
     BookList_200:
       description: List of books
@@ -438,6 +462,7 @@ components:
           type: string
         reference:
           type: string
+      
 
     CrupdateBook:
       type: object
