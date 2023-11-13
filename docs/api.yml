@@ -19,7 +19,7 @@ paths:
 
         responses:
          '200':
-            description: List of the visitors in the database
+           $ref: "#/components/responses/VisitorList200"
     put:
       tags:
         - "Visitors"
@@ -35,7 +35,7 @@ paths:
                 $ref: "#/components/schemas/Visitors"
       responses:
          '200':
-            description: Updated successfully
+            $ref: "#/components/responses/VisitorList200"
     delete:
       tags:
         - "Visitors"
@@ -49,7 +49,7 @@ paths:
             type: integer
       responses:
          '200':
-            description: Deleted successfully
+            $ref: "#/components/responses/VisitorList200"
 
   /books:
     get:
@@ -294,14 +294,17 @@ paths:
         - $ref: '#/components/parameters/borrowBooks'
       responses:
          '200':
-            $ref: '#/components/responses/BookList_200'
-         '400': 
-            $ref: '#/components/responses/BookList400'
-         '403':
-            $ref: '#/components/responses/BookList403'
-         '500': 
-            $ref: '#/components/responses/Booklist500'
+            description: Book's status ':' Borrowed or Rendered
 
+  /visitors/books/{borrow}:
+    get:
+      tags:
+        - "Visitors"
+      parameters:
+          - $ref: '#/components/parameters/borrowBooks'
+      responses:
+        '200':
+          $ref: "#/components/responses/VisitorList200"
   /authors/import:
     post:
       tags:
@@ -373,6 +376,13 @@ components:
             - True
             - False 
   responses:
+    VisitorList200:
+      description: List of visitors
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/VisitorListBody'
+
     BookList_200:
       description: List of books
       content:
@@ -414,7 +424,14 @@ components:
           $ref: '#/components/schemas/ResponseStatus'
         body:
           type: object
-          
+    ResponseVisitorStatusTemplate:
+      type: array
+      items: 
+        $ref: '#/components/schemas/Visitors'
+
+    VisitorListBody:
+      allOf:
+        - $ref: '#/components/schemas/ResponseVisitorStatusTemplate'
     BadRequestBody:
       allOf:
         - $ref: '#/components/schemas/ResponseBodyTemplate'
