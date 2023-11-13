@@ -9,6 +9,8 @@ paths:
 
   /visitors:
     get:
+        tags:
+        - "Visitors"
         summary: Get all visitors
         description: List of the visitors
         operationId: getVisitors
@@ -24,7 +26,49 @@ paths:
             $ref: '#/components/responses/BookList403'
          '500': 
             $ref: '#/components/responses/Booklist500'
-      
+    put:
+      tags:
+        - "Visitors"
+      summary: Update visitors
+      description: Update the list of visitors
+      operationId: updateVisitors
+      requestBody:
+        content:
+          application/json:
+            schema: 
+              type: array
+              items:
+                $ref: "#/components/schemas/Visitors"
+      responses:
+         '200':
+            $ref: '#/components/responses/BookList_200'
+         '400': 
+            $ref: '#/components/responses/BookList400'
+         '403':
+            $ref: '#/components/responses/BookList403'
+         '500': 
+            $ref: '#/components/responses/Booklist500'
+
+    delete:
+      tags:
+        - "Visitors"
+      summary: Delete visitors by id
+      description: Delete a visitor's information according by their id
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema: 
+            type: integer
+      responses:
+         '200':
+            $ref: '#/components/responses/BookList_200'
+         '400': 
+            $ref: '#/components/responses/BookList400'
+         '403':
+            $ref: '#/components/responses/BookList403'
+         '500': 
+            $ref: '#/components/responses/Booklist500'
 
   /books:
     get:
@@ -132,7 +176,7 @@ paths:
       description: Deleting an author by id
       parameters:
         - name: id
-          in: path
+          in: query
           required: true
           schema: 
             type: integer
