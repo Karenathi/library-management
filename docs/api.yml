@@ -18,18 +18,10 @@ paths:
           - $ref: '#/components/parameters/pathPagination'
 
       responses:
-       '200':
-          $ref: "#/components/responses/Response200"
-
-       '400':
-          $ref: "#/components/responses/Response400"
-
-       '403':
-          $ref: "#/components/responses/Response403"
-
-       '500':
-          $ref: "#/components/responses/Response500"
-        
+         '200':
+            $ref: '#/components/responses/BookList_200'
+         '400': 
+            $ref: '#/components/responses/BookList400'
     put:
       tags:
         - "Book"
@@ -51,17 +43,10 @@ paths:
 
       responses:
          '200':
-          $ref: "#/components/responses/Response200"
-
+            $ref: '#/components/responses/BookList_200'
          '400':
-          $ref: "#/components/responses/Response400"
+            $ref: '#/components/responses/BookList400'
 
-         '403':
-          $ref: "#/components/responses/Response403"
-
-         '500':
-          $ref: "#/components/responses/Response500"
-        
   /authors:
     get:
       tags:
@@ -73,17 +58,7 @@ paths:
 
       responses:
          '200':
-          $ref: "#/components/responses/Response200"
-
-         '400':
-          $ref: "#/components/responses/Response400"
-
-         '403':
-          $ref: "#/components/responses/Response403"
-
-         '500':
-          $ref: "#/components/responses/Response500"
-
+          description: Lists
     put:
       tags:
         - "Author"
@@ -112,17 +87,7 @@ paths:
          
       responses:
          '200':
-          $ref: "#/components/responses/Response200"
-
-         '400':
-          $ref: "#/components/responses/Response400"
-
-         '403':
-          $ref: "#/components/responses/Response403"
-
-         '500':
-          $ref: "#/components/responses/Response500"
-    
+          description: Lists
     delete:
       tags:
         - "Author"
@@ -136,16 +101,7 @@ paths:
             type: integer
       responses:
          '200':
-          $ref: "#/components/responses/Response200"
-
-         '400':
-          $ref: "#/components/responses/Response400"
-
-         '403':
-          $ref: "#/components/responses/Response403"
-
-         '500':
-          $ref: "#/components/responses/Response500"
+          description: Lists
           
   /books/{bookID}/authors/{authorID}:
    put:
@@ -190,16 +146,7 @@ paths:
               $ref: "#/components/schemas/ExcelBookImport"
       responses:
          '200':
-          $ref: "#/components/responses/Response200"
-
-         '400':
-          $ref: "#/components/responses/Response400"
-
-         '403':
-          $ref: "#/components/responses/Response403"
-
-         '500':
-          $ref: "#/components/responses/Response500"
+          description: Lists
     put:
       tags:
         - "Book"
@@ -221,16 +168,7 @@ paths:
 
       responses:
          '200':
-          $ref: "#/components/responses/Response200"
-
-         '400':
-          $ref: "#/components/responses/Response400"
-
-         '403':
-          $ref: "#/components/responses/Response403"
-
-         '500':
-          $ref: "#/components/responses/Response500"
+          description: Lists
   /books/{page}:
     get:
       tags:
@@ -240,17 +178,7 @@ paths:
       
       responses:
          '200':
-          $ref: "#/components/responses/Response200"
-
-         '400':
-          $ref: "#/components/responses/Response400"
-
-         '403':
-          $ref: "#/components/responses/Response403"
-
-         '500':
-          $ref: "#/components/responses/Response500"
-
+          description: Lists
 
   /authors/import:
     post:
@@ -270,22 +198,77 @@ paths:
             schema:
               $ref: "#/components/schemas/ExcelAuthorImport"
       responses:
-        200:
-          description: List of imported authors
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/Author"
-        400:
-          $ref: "#/components/responses/Response400"
-        403:
-          $ref: "#/components/responses/Response403"
-        500:
-          $ref: "#/components/responses/Response500"
+         '200':
+          description: Lists
+
 components:
+  parameters:
+    queryPagination:
+      name: page
+      in: query
+      description: Page number for pagination
+      required: false
+      schema:
+        type: integer
+        default: 1
+
+    pathPagination:
+      name: pageSize
+      in: query
+      description: Page number for pagination
+      required: false
+      schema:
+        type: integer
+        default: 50
+  responses:
+    BookList_200:
+      description: List of books
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BookListBody'
+    BookList400:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BadRequestBody'
+
   schemas:
+    ResponseStatus:
+      type: object
+      properties:
+        code:
+          type: integer
+          example: 200
+        message:
+          type: string
+    ResponseBodyTemplate:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/ResponseStatus'
+        body:
+          type: object
+          
+    BadRequestBody:
+      allOf:
+        - $ref: '#/components/schemas/ResponseBodyTemplate'
+      example:
+        status:
+          code: 400
+          message: BAD REQUEST
+        body: { }
+
+    BookListBody:
+      allOf:
+        - $ref: '#/components/schemas/ResponseBodyTemplate'
+        - properties:
+            body:
+              type: array
+              items:
+                $ref: '#/components/schemas/Book'
+
     Book:
        allOf:
          - $ref: "#/components/schemas/CrupdateBook"
@@ -343,6 +326,9 @@ components:
         excelFile:
           type: string
           format: binary
+      required:
+        - authorName
+        - sex
 
     JSONAuthorImport:
       type: array
@@ -398,64 +384,4 @@ components:
               type: string
         body:
           type: object
-
-  responses:
-    Response200:
-      description: HTTP 200 (OK)
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/defaultResponse"
-          example:
-            status:
-              code: 200
-              message: OK
-    Response400:
-      description: HTTP 400 (Bad Request)
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/defaultResponse"
-          example:
-            status:
-              code: 400
-              message: Bad Request
-    Response403:
-      description: HTTP 403 (Forbidden)
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/defaultResponse"
-          example:
-            status:
-              code: 403
-              message: Forbidden
-    Response500:
-      description: HTTP 500 (Internal Server Error)
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/defaultResponse"
-          example:
-            status:
-              code: 500
-              message: Internal Server Error
-  parameters:
-    queryPagination:
-      name: page
-      in: query
-      description: Page number for pagination
-      required: false
-      schema: 
-        type: integer
-        default: 1
-
-    pathPagination:
-      name: pageSize
-      in: query
-      description: Page number for pagination
-      required: false
-      schema: 
-        type: integer
-        default: 50
 
