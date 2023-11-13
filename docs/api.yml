@@ -80,8 +80,6 @@ paths:
       parameters:
           - $ref: '#/components/parameters/queryPagination'
           - $ref: '#/components/parameters/pathPagination'
-          - $ref: '#/components/parameters/BorrowBooks'
-          - $ref: '#/components/parameters/RenderBooks'
 
       responses:
          '200':
@@ -217,7 +215,8 @@ paths:
             $ref: '#/components/responses/BookList403'
          '500': 
             $ref: '#/components/responses/Booklist500'
-  
+
+
   /books/authors:
     post:
       tags:
@@ -334,29 +333,6 @@ components:
       schema:
         type: integer
         default: 50
-    BorrowBooks:
-      name: Borrowing
-      in: query
-      description: Book borrowed
-      required: false
-      schema:
-        type: string
-        default: 
-          enum:
-            - True
-            - False
-
-    RenderBooks:
-      name: Rendering
-      in: query
-      description: Book Rendered
-      required: false
-      schema:
-        type: string
-        default:
-          enum:
-            - True
-            - False 
   responses:
     BookList_200:
       description: List of books
@@ -433,7 +409,7 @@ components:
           code: 500
           message: INTERNAL SERVER ERROR
         body: { }
-
+    
     Book:
        allOf:
          - $ref: "#/components/schemas/CrupdateBook"
@@ -482,6 +458,11 @@ components:
         releaseDate:
           type: string
           format: date
+        status:
+          type: string
+          enum:
+            - Borrowed
+            - Rendered
     UpdateBookAuthor:
       type: object
       properties:
