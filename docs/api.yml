@@ -15,6 +15,7 @@ paths:
       operationId: getBooks
       parameters:
           - $ref: '#/components/parameters/queryPagination'
+          - $ref: '#/components/parameters/pathPagination'
 
       responses:
        '200':
