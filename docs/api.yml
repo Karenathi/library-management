@@ -19,13 +19,7 @@ paths:
 
         responses:
          '200':
-            $ref: '#/components/responses/BookList_200'
-         '400': 
-            $ref: '#/components/responses/BookList400'
-         '403':
-            $ref: '#/components/responses/BookList403'
-         '500': 
-            $ref: '#/components/responses/Booklist500'
+            description: List of the visitors in the database
     put:
       tags:
         - "Visitors"
@@ -41,14 +35,7 @@ paths:
                 $ref: "#/components/schemas/Visitors"
       responses:
          '200':
-            $ref: '#/components/responses/BookList_200'
-         '400': 
-            $ref: '#/components/responses/BookList400'
-         '403':
-            $ref: '#/components/responses/BookList403'
-         '500': 
-            $ref: '#/components/responses/Booklist500'
-
+            description: Updated successfully
     delete:
       tags:
         - "Visitors"
@@ -62,13 +49,7 @@ paths:
             type: integer
       responses:
          '200':
-            $ref: '#/components/responses/BookList_200'
-         '400': 
-            $ref: '#/components/responses/BookList400'
-         '403':
-            $ref: '#/components/responses/BookList403'
-         '500': 
-            $ref: '#/components/responses/Booklist500'
+            description: Deleted successfully
 
   /books:
     get:
@@ -467,7 +448,7 @@ components:
           code: 500
           message: INTERNAL SERVER ERROR
         body: { }
-    
+
     Book:
        allOf:
          - $ref: "#/components/schemas/CrupdateBook"
