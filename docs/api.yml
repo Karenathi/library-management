@@ -446,30 +446,15 @@ components:
       description: Page number for pagination
       required: false
       schema: 
-        type: object
-        properties:
-          page:
-            type: integer
-            default: 1
-          pagesize: 
-            type: integer
-            default: 50
+        type: integer
+        default: 1
 
-        
-    
     pathPagination:
-      name: page
-      in: path
+      name: pageSize
+      in: query
       description: Page number for pagination
-      required: true
+      required: false
       schema: 
-        type: object
-        properties:
-          page:
-            type: integer
-            default: 1
-          pagesize: 
-            type: integer
-            default: 50
-        
+        type: integer
+        default: 50
 
