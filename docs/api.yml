@@ -80,6 +80,7 @@ paths:
       parameters:
           - $ref: '#/components/parameters/queryPagination'
           - $ref: '#/components/parameters/pathPagination'
+          
 
       responses:
          '200':
@@ -287,6 +288,39 @@ paths:
             $ref: '#/components/responses/BookList403'
          '500': 
             $ref: '#/components/responses/Booklist500'
+
+  /books/{render}:
+    get:
+      tags:
+        - "Book"
+      parameters:
+        - $ref: '#/components/parameters/renderBooks'
+      responses:
+         '200':
+            $ref: '#/components/responses/BookList_200'
+         '400': 
+            $ref: '#/components/responses/BookList400'
+         '403':
+            $ref: '#/components/responses/BookList403'
+         '500': 
+            $ref: '#/components/responses/Booklist500'
+
+  /books/{borrow}:
+    get:
+      tags:
+        - "Book"
+      parameters:
+        - $ref: '#/components/parameters/borrowBooks'
+      responses:
+         '200':
+            $ref: '#/components/responses/BookList_200'
+         '400': 
+            $ref: '#/components/responses/BookList400'
+         '403':
+            $ref: '#/components/responses/BookList403'
+         '500': 
+            $ref: '#/components/responses/Booklist500'
+
   /authors/import:
     post:
       tags:
@@ -333,6 +367,30 @@ components:
       schema:
         type: integer
         default: 50
+
+    borrowBooks:
+      name: Borrowing
+      in: query
+      description: Book borrowed
+      required: false
+      schema:
+        type: string
+        default: 
+          enum:
+            - True
+            - False
+
+    renderBooks:
+      name: Rendering
+      in: query
+      description: Book Rendered
+      required: false
+      schema:
+        type: string
+        default:
+          enum:
+            - True
+            - False 
   responses:
     BookList_200:
       description: List of books
@@ -417,6 +475,9 @@ components:
            properties:
              author:
               $ref: "#/components/schemas/Author"
+             visitor:
+              $ref: "#/components/schemas/Visitors"
+
 
     Author:
       type: object
