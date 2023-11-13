@@ -22,6 +22,10 @@ paths:
             $ref: '#/components/responses/BookList_200'
          '400': 
             $ref: '#/components/responses/BookList400'
+         '403':
+            $ref: '#/components/responses/BookList403'
+         '500': 
+            $ref: '#/components/responses/Booklist500'
     put:
       tags:
         - "Book"
@@ -44,9 +48,12 @@ paths:
       responses:
          '200':
             $ref: '#/components/responses/BookList_200'
-         '400':
+         '400': 
             $ref: '#/components/responses/BookList400'
-
+         '403':
+            $ref: '#/components/responses/BookList403'
+         '500': 
+            $ref: '#/components/responses/Booklist500'
   /authors:
     get:
       tags:
@@ -58,7 +65,13 @@ paths:
 
       responses:
          '200':
-          description: Lists
+            $ref: '#/components/responses/BookList_200'
+         '400': 
+            $ref: '#/components/responses/BookList400'
+         '403':
+            $ref: '#/components/responses/BookList403'
+         '500': 
+            $ref: '#/components/responses/Booklist500'
     put:
       tags:
         - "Author"
@@ -83,11 +96,15 @@ paths:
             schema:
               $ref: "#/components/schemas/ExcelAuthorImport"
 
-            
-         
       responses:
          '200':
-          description: Lists
+            $ref: '#/components/responses/BookList_200'
+         '400': 
+            $ref: '#/components/responses/BookList400'
+         '403':
+            $ref: '#/components/responses/BookList403'
+         '500': 
+            $ref: '#/components/responses/Booklist500'
     delete:
       tags:
         - "Author"
@@ -101,7 +118,13 @@ paths:
             type: integer
       responses:
          '200':
-          description: Lists
+            $ref: '#/components/responses/BookList_200'
+         '400': 
+            $ref: '#/components/responses/BookList400'
+         '403':
+            $ref: '#/components/responses/BookList403'
+         '500': 
+            $ref: '#/components/responses/Booklist500'
           
   /books/{bookID}/authors/{authorID}:
    put:
@@ -120,12 +143,14 @@ paths:
             type: string
           required: true
       responses:
-        '200':
-            description: The updated book
-            content:
-              application/json:
-                schema:
-                  $ref: "#/components/schemas/Book"
+         '200':
+            $ref: '#/components/responses/BookList_200'
+         '400': 
+            $ref: '#/components/responses/BookList400'
+         '403':
+            $ref: '#/components/responses/BookList403'
+         '500': 
+            $ref: '#/components/responses/Booklist500'
   
   /books/authors:
     post:
@@ -146,7 +171,13 @@ paths:
               $ref: "#/components/schemas/ExcelBookImport"
       responses:
          '200':
-          description: Lists
+            $ref: '#/components/responses/BookList_200'
+         '400': 
+            $ref: '#/components/responses/BookList400'
+         '403':
+            $ref: '#/components/responses/BookList403'
+         '500': 
+            $ref: '#/components/responses/Booklist500'
     put:
       tags:
         - "Book"
@@ -168,7 +199,13 @@ paths:
 
       responses:
          '200':
-          description: Lists
+            $ref: '#/components/responses/BookList_200'
+         '400': 
+            $ref: '#/components/responses/BookList400'
+         '403':
+            $ref: '#/components/responses/BookList403'
+         '500': 
+            $ref: '#/components/responses/Booklist500'
   /books/{page}:
     get:
       tags:
@@ -178,8 +215,13 @@ paths:
       
       responses:
          '200':
-          description: Lists
-
+            $ref: '#/components/responses/BookList_200'
+         '400': 
+            $ref: '#/components/responses/BookList400'
+         '403':
+            $ref: '#/components/responses/BookList403'
+         '500': 
+            $ref: '#/components/responses/Booklist500'
   /authors/import:
     post:
       tags:
@@ -199,8 +241,13 @@ paths:
               $ref: "#/components/schemas/ExcelAuthorImport"
       responses:
          '200':
-          description: Lists
-
+            $ref: '#/components/responses/BookList_200'
+         '400': 
+            $ref: '#/components/responses/BookList400'
+         '403':
+            $ref: '#/components/responses/BookList403'
+         '500': 
+            $ref: '#/components/responses/Booklist500'
 components:
   parameters:
     queryPagination:
@@ -220,6 +267,7 @@ components:
       schema:
         type: integer
         default: 50
+
   responses:
     BookList_200:
       description: List of books
@@ -233,6 +281,18 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/BadRequestBody'
+    BookList403:
+      description: FORBIDDEN
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ForbiddenBody'
+    Booklist500:
+      description: INTERNAL SERVER ERROR
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ServerErrorBody'
 
   schemas:
     ResponseStatus:
@@ -268,6 +328,22 @@ components:
               type: array
               items:
                 $ref: '#/components/schemas/Book'
+    ForbiddenBody:
+     allOf:
+       - $ref: '#/components/schemas/ResponseBodyTemplate'
+     example:
+      status:
+        code: 403
+        message: FORBIDDEN
+      body: { }
+    ServerErrorBody:
+      allOf:
+        - $ref: '#/components/schemas/ResponseBodyTemplate'
+      example:
+        status:
+          code: 500
+          message: INTERNAL SERVER ERROR
+        body: { }
 
     Book:
        allOf:
