@@ -286,7 +286,7 @@ paths:
          '500': 
             $ref: '#/components/responses/Booklist500'
 
-  /books/{borrow}:
+  /books/borrow:
     get:
       tags:
         - "Book"
@@ -294,9 +294,9 @@ paths:
         - $ref: '#/components/parameters/borrowBooks'
       responses:
          '200':
-            description: Book's status ':' Borrowed or Rendered
+           $ref: "#/components/responses/VisitorList200"
 
-  /visitors/books/{borrow}:
+  /visitors/books/borrow:
     get:
       tags:
         - "Visitors"
@@ -305,6 +305,7 @@ paths:
       responses:
         '200':
           $ref: "#/components/responses/VisitorList200"
+          
   /authors/import:
     post:
       tags:
