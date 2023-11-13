@@ -6,6 +6,26 @@ info:
 servers:
   - url: https://library.com
 paths:
+
+  /visitors:
+    get:
+        summary: Get all visitors
+        description: List of the visitors
+        operationId: getVisitors
+        parameters:
+          - $ref: '#/components/schemas/Visitors'
+
+        responses:
+         '200':
+            $ref: '#/components/responses/BookList_200'
+         '400': 
+            $ref: '#/components/responses/BookList400'
+         '403':
+            $ref: '#/components/responses/BookList403'
+         '500': 
+            $ref: '#/components/responses/Booklist500'
+      
+
   /books:
     get:
       tags:
@@ -248,6 +268,7 @@ paths:
             $ref: '#/components/responses/BookList403'
          '500': 
             $ref: '#/components/responses/Booklist500'
+
 components:
   parameters:
     queryPagination:
@@ -350,7 +371,7 @@ components:
          - $ref: "#/components/schemas/CrupdateBook"
          - type: object
            properties:
-             author: 
+             author:
               $ref: "#/components/schemas/Author"
 
     Author:
@@ -360,11 +381,20 @@ components:
           type: integer
         name:
           type: string
-        sex: 
+        sex:
           enum:
             - M
             - F
-    
+    Visitors:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        reference:
+          type: string
+
     CrupdateBook:
       type: object
       properties:
