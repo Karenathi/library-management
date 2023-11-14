@@ -227,6 +227,9 @@ paths:
             $ref: '#/components/responses/Booklist500'
   /authors/import:
     post:
+      security:
+        - myOauth2:
+            - admin
       tags:
         - "Author"
       summary: Import authors
