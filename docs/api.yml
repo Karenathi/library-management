@@ -318,7 +318,28 @@ paths:
           $ref: '#/components/responses/BookList403'
         '500':
           $ref: '#/components/responses/Booklist500'
-            
+  
+  /books/{bookID}/return:
+    post:
+      tags:
+        - "Book"
+      summary: Return a borrowed book
+      operationId: returnBook
+      parameters:
+        - name: bookID
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          $ref: '#/components/responses/BookList_200'
+        '400':
+          $ref: '#/components/responses/BookList400'
+        '403':
+          $ref: '#/components/responses/BookList403'
+        '500':
+          $ref: '#/components/responses/Booklist500'
 components:
   parameters:
     queryPagination:
