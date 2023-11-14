@@ -8,6 +8,9 @@ servers:
 paths:
   /books:
     get:
+      security:
+        - oauth2:
+            - read:books
       tags:
         - "Book"
       summary: Get all books
@@ -383,6 +386,13 @@ paths:
           $ref: '#/components/responses/Booklist500'
 
 components:
+  securitySchemes:
+    myOauth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: 'https://example.com/oauth2/token'
+          
   parameters:
     queryPagination:
       name: page
