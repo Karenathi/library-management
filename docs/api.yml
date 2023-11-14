@@ -352,6 +352,9 @@ paths:
   
   /books/{bookID}/return:
     get:
+      security:
+        - myOauth2:
+            - admin
       tags:
         - "Book"
       summary: Get the list of returned books by a visitor
