@@ -1,56 +1,11 @@
 openapi: 3.0.3
 info:
   title: Library API
-  version: 1.2.0
+  version: 1.3.0
   description: STD22099
 servers:
   - url: https://library.com
 paths:
-
-  /visitors:
-    get:
-        tags:
-        - "Visitors"
-        summary: Get all visitors
-        description: List of the visitors
-        operationId: getVisitors
-        parameters:
-          - $ref: '#/components/schemas/Visitors'
-
-        responses:
-         '200':
-           $ref: "#/components/responses/VisitorList200"
-    put:
-      tags:
-        - "Visitors"
-      summary: Update visitors
-      description: Update the list of visitors
-      operationId: updateVisitors
-      requestBody:
-        content:
-          application/json:
-            schema: 
-              type: array
-              items:
-                $ref: "#/components/schemas/Visitors"
-      responses:
-         '200':
-            $ref: "#/components/responses/VisitorList200"
-    delete:
-      tags:
-        - "Visitors"
-      summary: Delete visitors by id
-      description: Delete a visitor's information according by their id
-      parameters:
-        - name: id
-          in: query
-          required: true
-          schema: 
-            type: integer
-      responses:
-         '200':
-            $ref: "#/components/responses/VisitorList200"
-
   /books:
     get:
       tags:
@@ -61,7 +16,6 @@ paths:
       parameters:
           - $ref: '#/components/parameters/queryPagination'
           - $ref: '#/components/parameters/pathPagination'
-          
 
       responses:
          '200':
@@ -158,7 +112,7 @@ paths:
       description: Deleting an author by id
       parameters:
         - name: id
-          in: query
+          in: path
           required: true
           schema: 
             type: integer
@@ -197,8 +151,7 @@ paths:
             $ref: '#/components/responses/BookList403'
          '500': 
             $ref: '#/components/responses/Booklist500'
-
-
+  
   /books/authors:
     post:
       tags:
@@ -269,43 +222,6 @@ paths:
             $ref: '#/components/responses/BookList403'
          '500': 
             $ref: '#/components/responses/Booklist500'
-
-  /books/{render}:
-    get:
-      tags:
-        - "Book"
-      parameters:
-        - $ref: '#/components/parameters/renderBooks'
-      responses:
-         '200':
-            $ref: '#/components/responses/BookList_200'
-         '400': 
-            $ref: '#/components/responses/BookList400'
-         '403':
-            $ref: '#/components/responses/BookList403'
-         '500': 
-            $ref: '#/components/responses/Booklist500'
-
-  /books/borrow:
-    get:
-      tags:
-        - "Book"
-      parameters:
-        - $ref: '#/components/parameters/borrowBooks'
-      responses:
-         '200':
-           $ref: "#/components/responses/VisitorList200"
-
-  /visitors/books/borrow:
-    get:
-      tags:
-        - "Visitors"
-      parameters:
-          - $ref: '#/components/parameters/borrowBooks'
-      responses:
-        '200':
-          $ref: "#/components/responses/VisitorList200"
-          
   /authors/import:
     post:
       tags:
@@ -333,6 +249,76 @@ paths:
          '500': 
             $ref: '#/components/responses/Booklist500'
 
+
+
+  /visitors:
+    get:
+      tags:
+        - "Visitors"
+      summary: Get all visitors
+      description: Return all the visitors saved in the database
+      operationId: getVisitors
+      parameters:
+        - $ref: "#/components/schemas/Visitors"
+      responses:
+        '200':
+          $ref: "#/components/responses/VisitorList200"
+    put:
+      tags:
+        - "Visitors"
+      summary: Update Visitor by ID
+      description: Update visitor's information
+      parameters:
+        - in: query
+          name: id
+          required: true
+          content:
+            application/json:
+              schema: 
+                $ref: "#/components/schemas/Visitors"
+      responses:
+        '200':
+          $ref: "#/components/responses/VisitorList200"
+
+    delete:
+      tags:
+        - "Visitors"
+      summary: Delete visitor by ID
+      description: Delete visitor's information
+      parameters:
+        - in: query
+          name: id
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Visitors"
+      responses:
+        '200':
+          $ref: "#/components/responses/VisitorList200"
+
+  /books/{bookID}/borrow:
+    post:
+      tags:
+        - "Book"
+      summary: Borrow a book
+      operationId: borrowBook
+      parameters:
+        - name: bookID
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          $ref: '#/components/responses/BookList_200'
+        '400':
+          $ref: '#/components/responses/BookList400'
+        '403':
+          $ref: '#/components/responses/BookList403'
+        '500':
+          $ref: '#/components/responses/Booklist500'
+            
 components:
   parameters:
     queryPagination:
@@ -353,37 +339,7 @@ components:
         type: integer
         default: 50
 
-    borrowBooks:
-      name: Borrowing
-      in: query
-      description: Book borrowed
-      required: false
-      schema:
-        type: string
-        default: 
-          enum:
-            - True
-            - False
-
-    renderBooks:
-      name: Rendering
-      in: query
-      description: Book Rendered
-      required: false
-      schema:
-        type: string
-        default:
-          enum:
-            - True
-            - False 
   responses:
-    VisitorList200:
-      description: List of visitors
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/VisitorListBody'
-
     BookList_200:
       description: List of books
       content:
@@ -408,6 +364,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ServerErrorBody'
+    VisitorList200:
+      description: List of Visitors
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/VisitorListBody'
 
   schemas:
     ResponseStatus:
@@ -425,14 +387,7 @@ components:
           $ref: '#/components/schemas/ResponseStatus'
         body:
           type: object
-    ResponseVisitorStatusTemplate:
-      type: array
-      items: 
-        $ref: '#/components/schemas/Visitors'
-
-    VisitorListBody:
-      allOf:
-        - $ref: '#/components/schemas/ResponseVisitorStatusTemplate'
+          
     BadRequestBody:
       allOf:
         - $ref: '#/components/schemas/ResponseBodyTemplate'
@@ -467,15 +422,28 @@ components:
           message: INTERNAL SERVER ERROR
         body: { }
 
+    VisitorListBody:
+     allOf:
+        - $ref: '#/components/schemas/ResponseBodyTemplate'
+        - properties:
+            body:
+              type: array
+              items:
+                $ref: '#/components/schemas/Visitors'
     Book:
        allOf:
          - $ref: "#/components/schemas/CrupdateBook"
          - type: object
            properties:
-             author:
+             author: 
               $ref: "#/components/schemas/Author"
              visitor:
               $ref: "#/components/schemas/Visitors"
+             availability:
+              type: string
+              enum:
+                - available
+                - borrowed
 
 
     Author:
@@ -485,10 +453,11 @@ components:
           type: integer
         name:
           type: string
-        sex:
+        sex: 
           enum:
             - M
             - F
+
     Visitors:
       type: object
       properties:
@@ -498,7 +467,6 @@ components:
           type: string
         reference:
           type: string
-      
 
     CrupdateBook:
       type: object
@@ -518,11 +486,6 @@ components:
         releaseDate:
           type: string
           format: date
-        status:
-          type: string
-          enum:
-            - Borrowed
-            - Rendered
     UpdateBookAuthor:
       type: object
       properties:
