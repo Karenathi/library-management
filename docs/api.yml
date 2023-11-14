@@ -324,28 +324,25 @@ paths:
       responses:
         '200':
           $ref: '#/components/responses/VisitorList200'
-          
-  /books/{bookID}/borrow:
-    post:
+
+  
+  /books/borrowed:
+    get:
       tags:
         - "Book"
-      summary: Borrow a book
-      operationId: borrowBook
+      summary: Get the list of borrowed books
+      operationId: getBorrowedBooks
       parameters:
-        - name: bookID
-          in: path
-          schema:
-            type: string
-          required: true
+        - $ref: "#/components/schemas/BookAvailabilityBorrowed"
       responses:
-        '200':
-          $ref: '#/components/responses/BookList_200'
-        '400':
-          $ref: '#/components/responses/BookList400'
-        '403':
-          $ref: '#/components/responses/BookList403'
-        '500':
-          $ref: '#/components/responses/Booklist500'
+         '200':
+            $ref: '#/components/responses/BookList_200'
+         '400': 
+            $ref: '#/components/responses/BookList400'
+         '403':
+            $ref: '#/components/responses/BookList403'
+         '500': 
+            $ref: '#/components/responses/Booklist500'
   
   /books/{bookID}/return:
     post:
@@ -503,13 +500,24 @@ components:
            properties:
              author: 
               $ref: "#/components/schemas/Author"
-             visitor:
-              $ref: "#/components/schemas/Visitors"
              availability:
-              type: string
-              enum:
-                - available
-                - borrowed
+              $ref: "#/components/schemas/BookAvailability"
+    
+    BookAvailability:
+      oneOf:
+         - $ref: "#/components/schemas/BookAvailabilityBorrowed"
+
+         - $ref: "#/components/schemas/BookAvailabilityAvailable"
+       
+    BookAvailabilityAvailable:
+      type: string
+      enum:
+        - available
+
+    BookAvailabilityBorrowed:
+      type: string
+      enum:
+        - borrowed
 
 
     Author:
