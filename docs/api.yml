@@ -340,6 +340,22 @@ paths:
           $ref: '#/components/responses/BookList403'
         '500':
           $ref: '#/components/responses/Booklist500'
+  
+  /books/available:
+    get:
+      tags:
+        - "Book"
+      summary: Get available books
+      operationId: getAvailableBooks
+      responses:
+        '200':
+          $ref: '#/components/responses/BookList_200'
+        '400':
+          $ref: '#/components/responses/BookList400'
+        '403':
+          $ref: '#/components/responses/BookList403'
+        '500':
+          $ref: '#/components/responses/Booklist500'
 components:
   parameters:
     queryPagination:
