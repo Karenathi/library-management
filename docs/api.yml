@@ -297,6 +297,34 @@ paths:
         '200':
           $ref: "#/components/responses/VisitorList200"
 
+  /visitors/{visitorID}/activities:
+    get:
+      tags:
+        - "Visitors"
+      summary: Get visitor activities
+      operationId: getVisitorActivities
+      parameters:
+        - name: visitorID
+          in: path
+          schema:
+            type: integer
+          required: true
+        - name: startDate
+          in: query
+          schema:
+            type: string
+            format: date-time
+          required: true
+        - name: endDate
+          in: query
+          schema:
+            type: string
+            format: date-time
+          required: true
+      responses:
+        '200':
+          $ref: '#/components/responses/VisitorList200'
+          
   /books/{bookID}/borrow:
     post:
       tags:
@@ -356,6 +384,7 @@ paths:
           $ref: '#/components/responses/BookList403'
         '500':
           $ref: '#/components/responses/Booklist500'
+
 components:
   parameters:
     queryPagination:
