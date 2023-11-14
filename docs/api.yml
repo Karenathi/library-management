@@ -331,6 +331,9 @@ paths:
   
   /books/borrowed:
     get:
+      security:
+        - myOauth2:
+            - admin
       tags:
         - "Book"
       summary: Get the list of borrowed books
@@ -392,7 +395,7 @@ components:
       flows:
         clientCredentials:
           tokenUrl: 'https://example.com/oauth2/token'
-          
+
   parameters:
     queryPagination:
       name: page
