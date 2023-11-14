@@ -345,11 +345,11 @@ paths:
             $ref: '#/components/responses/Booklist500'
   
   /books/{bookID}/return:
-    post:
+    get:
       tags:
         - "Book"
-      summary: Return a borrowed book
-      operationId: returnBook
+      summary: Get the list of returned books by a visitor
+      operationId: getReturnedBooksByVisitor
       parameters:
         - name: bookID
           in: path
@@ -357,14 +357,14 @@ paths:
             type: string
           required: true
       responses:
-        '200':
-          $ref: '#/components/responses/BookList_200'
-        '400':
-          $ref: '#/components/responses/BookList400'
-        '403':
-          $ref: '#/components/responses/BookList403'
-        '500':
-          $ref: '#/components/responses/Booklist500'
+         '200':
+            $ref: '#/components/responses/BookList_200'
+         '400': 
+            $ref: '#/components/responses/BookList400'
+         '403':
+            $ref: '#/components/responses/BookList403'
+         '500': 
+            $ref: '#/components/responses/Booklist500'
   
   /books/available:
     get:
